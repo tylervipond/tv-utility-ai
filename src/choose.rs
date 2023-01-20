@@ -13,7 +13,8 @@ pub fn choose_action<T>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
 
 /**
  * This returns one of the hightest weighted actions based on fuzziness and a passed in
- * choice_offset. The choice_offset should likely be populated with a random number.
+ * choice_offset. The choice_offset should likely be populated with a random number by
+ * the consumer.
  */
 pub fn choose_action_fuzzy<T>(
     weighted_actions: Vec<WeightedAction<T>>,
