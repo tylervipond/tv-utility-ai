@@ -2,14 +2,17 @@ fn parameterized_logistic(value: f32, max_value: f32, mid_point: f32, steepness:
     max_value / (1.0 + (-steepness * (value - mid_point)).exp())
 }
 
+// the returned number should be between 0.0 and 1.0
 pub fn logistic(value: f32, steepness: f32) -> f32 {
     parameterized_logistic(value, 1.0, 0.5, steepness)
 }
 
+// the returned number should be between 0.0 and 1.0
 pub fn linear(value: f32, max: f32) -> f32 {
     value / max
 }
 
+// the returned number should be between 0.0 and 1.0
 pub fn quadratic(value: f32, max: f32, exponent: f32) -> f32 {
     linear(value, max).powf(exponent)
 }
@@ -24,6 +27,7 @@ pub struct CurvePiece {
     pub curve_type: CurveType,
 }
 
+// the returned number should be between 0.0 and 1.0
 pub fn piece_wise(value: f32, pieces: &Vec<CurvePiece>) -> f32 {
     let mut previous_max_value = 0.0;
     for piece in pieces {

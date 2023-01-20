@@ -1,6 +1,9 @@
 use super::WeightedAction;
 use std::collections::BinaryHeap;
 
+/**
+ * This returns whichever action has the highest weight
+ */
 pub fn choose_action<T>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
     weighted_actions
         .into_iter()
@@ -8,9 +11,15 @@ pub fn choose_action<T>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
         .map(|weighted_action| weighted_action.action)
 }
 
+/**
+ * This returns one of the hightest weighted actions based on fuzziness and a passed in
+ * choice_offset. The choice_offset should likely be populated with a random number.
+ */
 pub fn choose_action_fuzzy<T>(
     weighted_actions: Vec<WeightedAction<T>>,
+    // a number between 0.0 and 1.0
     fuzzyness: f32,
+    // a number between 0.0 and 1.0
     choice_offset: f32,
 ) -> Option<T> {
     let mut heap = BinaryHeap::from(weighted_actions);
