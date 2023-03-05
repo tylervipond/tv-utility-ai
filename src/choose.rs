@@ -4,7 +4,7 @@ use std::collections::BinaryHeap;
 /**
  * This returns whichever action has the highest weight
  */
-pub fn choose_action<T>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
+pub fn choose_action<T: PartialEq>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
     weighted_actions
         .into_iter()
         .max()
@@ -16,7 +16,7 @@ pub fn choose_action<T>(weighted_actions: Vec<WeightedAction<T>>) -> Option<T> {
  * choice_offset. The choice_offset should likely be populated with a random number by
  * the consumer.
  */
-pub fn choose_action_fuzzy<T>(
+pub fn choose_action_fuzzy<T: PartialEq>(
     weighted_actions: Vec<WeightedAction<T>>,
     // a number between 0.0 and 1.0
     fuzzyness: f32,
