@@ -1,6 +1,10 @@
-# tv-utility-ai
+# tv_utility_ai
+
+A simple utility-ai lib allowing people to create and choose actions using curves. This lib is based on this [chapter](http://www.gameaipro.com/GameAIPro/GameAIPro_Chapter09_An_Introduction_to_Utility_Theory.pdf) from Game AI Pro. 
 
 ## Usage
+Generally speaking, using this means creating a series of `WeightedAction`s using curves to determine their weight, then passing them into one of the choosers, either `choose_action` or `choose_action_fuzzy`, which will return a single action.
+
 ```rust
 use tv_utility_ai::{WeightedAction, curve, choose};
 
@@ -32,6 +36,7 @@ let actions = vec![
 ];
 
 let best_action = choose::choose_action(actions);
+// likely "work"
 
 ```
 

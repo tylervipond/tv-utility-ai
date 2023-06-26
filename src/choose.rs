@@ -16,7 +16,7 @@ pub fn choose_action<T: PartialEq>(weighted_actions: Vec<WeightedAction<T>>) -> 
  * choice_offset. The choice_offset should likely be populated with a random number by
  * the consumer.
  */
-pub fn choose_action_fuzzy<T: PartialEq>(
+pub fn choose_action_fuzzy<T: PartialEq + Clone>(
     weighted_actions: Vec<WeightedAction<T>>,
     // a number between 0.0 and 1.0
     fuzzyness: f32,
@@ -37,12 +37,15 @@ pub fn choose_action_fuzzy<T: PartialEq>(
             options.push(option)
         }
         let mut option_offset = 0.0;
+        let mut choice = None;
         for option in options {
             option_offset += option.weight / total_weight;
             if choice_offset <= option_offset {
                 return Some(option.action);
             }
+            choice = Some(option.action)
         }
+        return choice;
     }
     None
 }
@@ -159,6 +162,18 @@ mod test_choose_action_fuzzy {
         ];
         assert_eq!(choose_action_fuzzy(options.clone(), 0.1, 0.8), Some(expected));
         assert_eq!(choose_action_fuzzy(options, 0.1, 0.4), Some(expected_2));
+    }
+
+    #[test]
+    fn returns_an_action_even_if_the_weight_is_0() {
+        let expected = "expected_action";
+        let options = vec![
+            WeightedAction {
+                action: "expected_action",
+                weight: 0.0,
+            },
+        ];
+        assert_eq!(choose_action_fuzzy(options.clone(), 0.1, 0.8), Some(expected));
     }
 
     #[test]
